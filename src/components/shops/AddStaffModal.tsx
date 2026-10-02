@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { Modal } from '../common/Modal';
 import { api } from '../../services/api';
+
+const addStaffSchema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email address'),
+  role: z.enum(['Manager', 'Cashier']),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+});
+
+type AddStaffFormData = z.infer<typeof addStaffSchema>;
 
 interface AddStaffModalProps {
   isOpen: boolean;
@@ -17,40 +29,40 @@ export const AddStaffModal: React.FC<AddStaffModalProps> = ({
   shopName,
   onStaffAdded,
 }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [role, setRole] = useState<'Manager' | 'Cashier'>('Cashier');
-  const [password, setPassword] = useState('staff123');
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name || !email) {
-      setError('Name and email are required');
-      return;
-    }
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<AddStaffFormData>({
+    resolver: zodResolver(addStaffSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      role: 'Cashier',
+      password: 'staff123',
+    },
+  });
 
-    setLoading(true);
+  const onSubmit = async (data: AddStaffFormData) => {
     setError(null);
     try {
-      const res = await api.addStaff(shopId, { name, email, role, password });
+      const res = await api.addStaff(shopId, data);
       if (res.success) {
+        reset();
         onStaffAdded();
         onClose();
-        setName('');
-        setEmail('');
       }
     } catch (err: any) {
       setError(err.message || 'Failed to add staff member');
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={`Add Staff Member to ${shopName}`}>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {error && (
           <div className="p-3 text-xs bg-red-50 text-red-600 rounded-xl border border-red-200">
             {error}
@@ -61,32 +73,37 @@ export const AddStaffModal: React.FC<AddStaffModalProps> = ({
           <label className="block text-xs font-semibold text-slate-700 mb-1">Full Name</label>
           <input
             type="text"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            {...register('name')}
             placeholder="e.g. Asaduzzaman Nur"
-            className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-hidden"
+            className={`w-full px-3.5 py-2 text-xs bg-slate-50 border rounded-xl focus:ring-2 focus:ring-blue-500/20 outline-hidden ${
+              errors.name ? 'border-red-400 focus:border-red-500' : 'border-slate-200 focus:border-blue-500'
+            }`}
           />
+          {errors.name && (
+            <p className="text-[11px] text-red-500 mt-1 font-medium">{errors.name.message}</p>
+          )}
         </div>
 
         <div>
           <label className="block text-xs font-semibold text-slate-700 mb-1">Work Email</label>
           <input
             type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            {...register('email')}
             placeholder="e.g. asad@greenmart.com"
-            className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-hidden"
+            className={`w-full px-3.5 py-2 text-xs bg-slate-50 border rounded-xl focus:ring-2 focus:ring-blue-500/20 outline-hidden ${
+              errors.email ? 'border-red-400 focus:border-red-500' : 'border-slate-200 focus:border-blue-500'
+            }`}
           />
+          {errors.email && (
+            <p className="text-[11px] text-red-500 mt-1 font-medium">{errors.email.message}</p>
+          )}
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">Role</label>
             <select
-              value={role}
-              onChange={(e) => setRole(e.target.value as any)}
+              {...register('role')}
               className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-hidden"
             >
               <option value="Cashier">Cashier</option>
@@ -99,28 +116,33 @@ export const AddStaffModal: React.FC<AddStaffModalProps> = ({
               Initial Password
             </label>
             <input
-              type="text"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-hidden font-mono"
+              type="password"
+              {...register('password')}
+              placeholder="••••••••"
+              className={`w-full px-3.5 py-2 text-xs bg-slate-50 border rounded-xl focus:ring-2 focus:ring-blue-500/20 outline-hidden ${
+                errors.password ? 'border-red-400 focus:border-red-500' : 'border-slate-200 focus:border-blue-500'
+              }`}
             />
+            {errors.password && (
+              <p className="text-[11px] text-red-500 mt-1 font-medium">{errors.password.message}</p>
+            )}
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-xs font-semibold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50"
+            className="px-4 py-2 text-xs font-semibold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
           >
             Cancel
           </button>
           <button
             type="submit"
-            disabled={loading}
-            className="px-5 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-xs"
+            disabled={isSubmitting}
+            className="px-5 py-2 text-xs font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-700 shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-60"
           >
-            {loading ? 'Adding...' : 'Add Staff Member'}
+            {isSubmitting ? 'Adding...' : 'Add Staff Member'}
           </button>
         </div>
       </form>

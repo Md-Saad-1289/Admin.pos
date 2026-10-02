@@ -78,6 +78,18 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       );
     });
 
+    s.on('payment_updated', (payment: any) => {
+      setRefreshKey((prev) => prev + 1);
+    });
+
+    s.on('payment_status_changed', (data: any) => {
+      addAlert(
+        'payment',
+        `Payment ${data?.status === 'approved' ? 'Approved' : 'Updated'}`,
+        `Payment status changed to ${data?.status}.`
+      );
+    });
+
     s.on('admin_payment_approved', (data: any) => {
       addAlert(
         'payment',
@@ -86,11 +98,15 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       );
     });
 
+    s.on('store_updated', () => {
+      setRefreshKey((prev) => prev + 1);
+    });
+
     s.on('store_status_changed', (data: any) => {
       addAlert(
         'shop',
-        `Shop ${data.status === 'suspended' ? 'Suspended' : 'Activated'}`,
-        `"${data.shopName}" status changed to ${data.status}.`
+        `Shop ${data?.status === 'suspended' ? 'Suspended' : 'Activated'}`,
+        `Shop status updated to ${data?.status}.`
       );
     });
 
@@ -98,7 +114,19 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       addAlert(
         'support',
         'New Support Ticket',
-        `Ticket #${ticket._id.slice(-4)}: ${ticket.subject}`
+        `Ticket #${ticket?._id ? ticket._id.slice(-4) : 'New'}: ${ticket?.subject || 'Support Request'}`
+      );
+    });
+
+    s.on('ticket_updated', () => {
+      setRefreshKey((prev) => prev + 1);
+    });
+
+    s.on('TICKET_REPLIED', (data: any) => {
+      addAlert(
+        'support',
+        'Ticket Reply Added',
+        `New reply sent on Ticket #${data?.ticketId ? data.ticketId.slice(-4) : ''}.`
       );
     });
 

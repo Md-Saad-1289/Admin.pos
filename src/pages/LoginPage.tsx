@@ -1,32 +1,48 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { useAuth } from '../context/AuthContext';
 import { ShoppingBag, Lock, Mail, ArrowRight, ShieldCheck, Eye, EyeOff, Info } from 'lucide-react';
+
+const loginSchema = z.object({
+  email: z.string().min(1, 'Email is required').email('Please enter a valid email address'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+  rememberMe: z.boolean(),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
 
 export const LoginPage: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('admin@shoppos.com');
-  const [password, setPassword] = useState('password123');
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(true);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: 'admin@shoppos.com',
+      password: 'password123',
+      rememberMe: true,
+    },
+  });
+
+  const onSubmit = async (data: LoginFormData) => {
     setError(null);
     setInfoMessage(null);
     try {
-      await login(email, password);
+      await login(data.email, data.password);
       navigate('/');
     } catch (err: any) {
       setError(err.message || 'Invalid email or password');
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -65,7 +81,7 @@ export const LoginPage: React.FC = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label className="block text-xs font-bold text-slate-700 mb-1.5">
               Admin Work Email
@@ -74,13 +90,16 @@ export const LoginPage: React.FC = () => {
               <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                {...register('email')}
                 placeholder="admin@shoppos.com"
-                className="w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800"
+                className={`w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50 border rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 transition-all text-slate-800 ${
+                  errors.email ? 'border-red-400 focus:border-red-500' : 'border-slate-200 focus:border-blue-500'
+                }`}
               />
             </div>
+            {errors.email && (
+              <p className="text-[11px] text-red-500 mt-1 font-medium">{errors.email.message}</p>
+            )}
           </div>
 
           <div>
@@ -98,11 +117,11 @@ export const LoginPage: React.FC = () => {
               <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type={showPassword ? 'text' : 'password'}
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                {...register('password')}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-10 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800"
+                className={`w-full pl-10 pr-10 py-2.5 text-xs bg-slate-50 border rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 transition-all text-slate-800 ${
+                  errors.password ? 'border-red-400 focus:border-red-500' : 'border-slate-200 focus:border-blue-500'
+                }`}
               />
               <button
                 type="button"
@@ -112,14 +131,16 @@ export const LoginPage: React.FC = () => {
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
+            {errors.password && (
+              <p className="text-[11px] text-red-500 mt-1 font-medium">{errors.password.message}</p>
+            )}
           </div>
 
           <div className="flex items-center justify-between pt-1">
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
+                {...register('rememberMe')}
                 className="w-3.5 h-3.5 rounded text-blue-600 focus:ring-blue-500 border-slate-300"
               />
               <span className="text-xs text-slate-600">Remember this device</span>
@@ -128,10 +149,10 @@ export const LoginPage: React.FC = () => {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={isSubmitting}
             className="w-full mt-2 py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-md shadow-blue-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
           >
-            {loading ? (
+            {isSubmitting ? (
               <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               <>

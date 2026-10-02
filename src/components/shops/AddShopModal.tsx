@@ -1,6 +1,22 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { Modal } from '../common/Modal';
 import { api } from '../../services/api';
+
+const addShopSchema = z.object({
+  name: z.string().min(2, 'Shop name must be at least 2 characters'),
+  branch: z.string(),
+  ownerName: z.string().min(2, 'Owner name must be at least 2 characters'),
+  ownerEmail: z.string().email('Please enter a valid email address'),
+  phone: z.string().min(6, 'Please enter a valid phone number'),
+  address: z.string(),
+  storeType: z.string(),
+  planId: z.string(),
+});
+
+type AddShopFormData = z.infer<typeof addShopSchema>;
 
 interface AddShopModalProps {
   isOpen: boolean;
@@ -9,55 +25,44 @@ interface AddShopModalProps {
 }
 
 export const AddShopModal: React.FC<AddShopModalProps> = ({ isOpen, onClose, onShopAdded }) => {
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [formData, setFormData] = useState({
-    name: '',
-    branch: '',
-    ownerName: '',
-    ownerEmail: '',
-    phone: '',
-    address: '',
-    storeType: 'Grocery',
-    planId: 'plan_pro',
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<AddShopFormData>({
+    resolver: zodResolver(addShopSchema),
+    defaultValues: {
+      name: '',
+      branch: 'Main Branch',
+      ownerName: '',
+      ownerEmail: '',
+      phone: '',
+      address: '',
+      storeType: 'Grocery',
+      planId: 'plan_pro',
+    },
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name || !formData.ownerName || !formData.phone) {
-      setError('Please fill in all required fields.');
-      return;
-    }
-
-    setLoading(true);
+  const onSubmit = async (data: AddShopFormData) => {
     setError(null);
     try {
-      const res = await api.createShop(formData);
+      const res = await api.createShop(data);
       if (res.success) {
+        reset();
         onShopAdded();
         onClose();
-        setFormData({
-          name: '',
-          branch: '',
-          ownerName: '',
-          ownerEmail: '',
-          phone: '',
-          address: '',
-          storeType: 'Grocery',
-          planId: 'plan_pro',
-        });
       }
     } catch (err: any) {
       setError(err.message || 'Failed to create shop');
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Add New Shop" maxWidth="lg">
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {error && (
           <div className="p-3 text-xs bg-red-50 text-red-600 rounded-xl border border-red-200">
             {error}
@@ -71,20 +76,22 @@ export const AddShopModal: React.FC<AddShopModalProps> = ({ isOpen, onClose, onS
             </label>
             <input
               type="text"
-              required
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              {...register('name')}
               placeholder="e.g. Green Mart"
-              className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-hidden"
+              className={`w-full px-3.5 py-2 text-xs bg-slate-50 border rounded-xl focus:ring-2 focus:ring-blue-500/20 outline-hidden ${
+                errors.name ? 'border-red-400 focus:border-red-500' : 'border-slate-200 focus:border-blue-500'
+              }`}
             />
+            {errors.name && (
+              <p className="text-[11px] text-red-500 mt-1 font-medium">{errors.name.message}</p>
+            )}
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">Branch Name</label>
             <input
               type="text"
-              value={formData.branch}
-              onChange={(e) => setFormData({ ...formData, branch: e.target.value })}
+              {...register('branch')}
               placeholder="e.g. Dhanmondi Branch"
               className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-hidden"
             />
@@ -96,23 +103,32 @@ export const AddShopModal: React.FC<AddShopModalProps> = ({ isOpen, onClose, onS
             </label>
             <input
               type="text"
-              required
-              value={formData.ownerName}
-              onChange={(e) => setFormData({ ...formData, ownerName: e.target.value })}
+              {...register('ownerName')}
               placeholder="e.g. Rahim Khan"
-              className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-hidden"
+              className={`w-full px-3.5 py-2 text-xs bg-slate-50 border rounded-xl focus:ring-2 focus:ring-blue-500/20 outline-hidden ${
+                errors.ownerName ? 'border-red-400 focus:border-red-500' : 'border-slate-200 focus:border-blue-500'
+              }`}
             />
+            {errors.ownerName && (
+              <p className="text-[11px] text-red-500 mt-1 font-medium">{errors.ownerName.message}</p>
+            )}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Owner Email</label>
+            <label className="block text-xs font-semibold text-slate-700 mb-1">
+              Owner Email <span className="text-red-500">*</span>
+            </label>
             <input
               type="email"
-              value={formData.ownerEmail}
-              onChange={(e) => setFormData({ ...formData, ownerEmail: e.target.value })}
+              {...register('ownerEmail')}
               placeholder="e.g. rahim@greenmart.com"
-              className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-hidden"
+              className={`w-full px-3.5 py-2 text-xs bg-slate-50 border rounded-xl focus:ring-2 focus:ring-blue-500/20 outline-hidden ${
+                errors.ownerEmail ? 'border-red-400 focus:border-red-500' : 'border-slate-200 focus:border-blue-500'
+              }`}
             />
+            {errors.ownerEmail && (
+              <p className="text-[11px] text-red-500 mt-1 font-medium">{errors.ownerEmail.message}</p>
+            )}
           </div>
 
           <div>
@@ -121,19 +137,21 @@ export const AddShopModal: React.FC<AddShopModalProps> = ({ isOpen, onClose, onS
             </label>
             <input
               type="tel"
-              required
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              {...register('phone')}
               placeholder="+880 1712-345678"
-              className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-hidden"
+              className={`w-full px-3.5 py-2 text-xs bg-slate-50 border rounded-xl focus:ring-2 focus:ring-blue-500/20 outline-hidden ${
+                errors.phone ? 'border-red-400 focus:border-red-500' : 'border-slate-200 focus:border-blue-500'
+              }`}
             />
+            {errors.phone && (
+              <p className="text-[11px] text-red-500 mt-1 font-medium">{errors.phone.message}</p>
+            )}
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">Store Type</label>
             <select
-              value={formData.storeType}
-              onChange={(e) => setFormData({ ...formData, storeType: e.target.value })}
+              {...register('storeType')}
               className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-hidden"
             >
               <option value="Grocery">Grocery</option>
@@ -149,8 +167,7 @@ export const AddShopModal: React.FC<AddShopModalProps> = ({ isOpen, onClose, onS
           <label className="block text-xs font-semibold text-slate-700 mb-1">Shop Address</label>
           <input
             type="text"
-            value={formData.address}
-            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+            {...register('address')}
             placeholder="e.g. Shop #14, Road 7, Dhanmondi, Dhaka"
             className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-hidden"
           />
@@ -161,8 +178,7 @@ export const AddShopModal: React.FC<AddShopModalProps> = ({ isOpen, onClose, onS
             Initial Subscription Plan
           </label>
           <select
-            value={formData.planId}
-            onChange={(e) => setFormData({ ...formData, planId: e.target.value })}
+            {...register('planId')}
             className="w-full px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-hidden"
           >
             <option value="plan_basic">Basic (৳499 / month)</option>
@@ -181,10 +197,10 @@ export const AddShopModal: React.FC<AddShopModalProps> = ({ isOpen, onClose, onS
           </button>
           <button
             type="submit"
-            disabled={loading}
-            className="px-5 py-2 text-xs font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-700 shadow-xs transition-colors flex items-center gap-1.5"
+            disabled={isSubmitting}
+            className="px-5 py-2 text-xs font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-700 shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-60"
           >
-            {loading ? 'Creating...' : 'Register Shop'}
+            {isSubmitting ? 'Creating...' : 'Register Shop'}
           </button>
         </div>
       </form>

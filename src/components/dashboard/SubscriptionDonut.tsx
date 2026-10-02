@@ -1,4 +1,5 @@
 import React from 'react';
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 
 interface SubscriptionDonutProps {
   total: number;
@@ -13,84 +14,57 @@ export const SubscriptionDonut: React.FC<SubscriptionDonutProps> = ({
   expiring = 42,
   expired = 66,
 }) => {
-  // SVG Donut calculation
-  const radius = 64;
-  const strokeWidth = 18;
-  const circumference = 2 * Math.PI * radius;
-
-  const activePct = active / (total || 1);
-  const expiringPct = expiring / (total || 1);
-  const expiredPct = expired / (total || 1);
-
-  const activeStroke = activePct * circumference;
-  const expiringStroke = expiringPct * circumference;
-  const expiredStroke = expiredPct * circumference;
-
-  const activeOffset = 0;
-  const expiringOffset = -activeStroke;
-  const expiredOffset = -(activeStroke + expiringStroke);
+  const chartData = [
+    { name: 'Active', value: active, color: '#10b981' },
+    { name: 'Expiring', value: expiring, color: '#f59e0b' },
+    { name: 'Expired', value: expired, color: '#ef4444' },
+  ];
 
   return (
     <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-xs flex flex-col justify-between">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold text-slate-900">Subscription Status</h3>
-        <span className="text-xs text-slate-400">Current</span>
+        <span className="text-xs text-slate-400 font-medium">Real-time</span>
       </div>
 
       <div className="mt-4 flex flex-col sm:flex-row items-center justify-around gap-6">
-        {/* SVG Donut */}
-        <div className="relative flex items-center justify-center">
-          <svg className="w-40 h-40 -rotate-90 transform" viewBox="0 0 160 160">
-            {/* Background ring */}
-            <circle
-              cx="80"
-              cy="80"
-              r={radius}
-              stroke="#f1f5f9"
-              strokeWidth={strokeWidth}
-              fill="transparent"
-            />
-
-            {/* Active arc */}
-            <circle
-              cx="80"
-              cy="80"
-              r={radius}
-              stroke="#10b981"
-              strokeWidth={strokeWidth}
-              fill="transparent"
-              strokeDasharray={`${activeStroke} ${circumference}`}
-              strokeDashoffset={activeOffset}
-              strokeLinecap="round"
-            />
-
-            {/* Expiring arc */}
-            <circle
-              cx="80"
-              cy="80"
-              r={radius}
-              stroke="#f59e0b"
-              strokeWidth={strokeWidth}
-              fill="transparent"
-              strokeDasharray={`${expiringStroke} ${circumference}`}
-              strokeDashoffset={expiringOffset}
-            />
-
-            {/* Expired arc */}
-            <circle
-              cx="80"
-              cy="80"
-              r={radius}
-              stroke="#ef4444"
-              strokeWidth={strokeWidth}
-              fill="transparent"
-              strokeDasharray={`${expiredStroke} ${circumference}`}
-              strokeDashoffset={expiredOffset}
-            />
-          </svg>
+        {/* Recharts Pie/Donut Chart */}
+        <div className="relative w-44 h-44 flex items-center justify-center">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Tooltip
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length) {
+                    const data = payload[0];
+                    return (
+                      <div className="bg-slate-900 text-white px-3 py-1.5 rounded-lg shadow-lg text-xs">
+                        <span className="font-medium text-slate-300">{data.name}: </span>
+                        <span className="font-bold text-white">{Number(data.value).toLocaleString()}</span>
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
+              />
+              <Pie
+                data={chartData}
+                cx="50%"
+                cy="50%"
+                innerRadius={52}
+                outerRadius={72}
+                paddingAngle={4}
+                dataKey="value"
+                strokeWidth={0}
+              >
+                {chartData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
 
           {/* Center text */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
             <span className="text-xl font-bold text-slate-900 leading-tight">
               {total.toLocaleString()}
             </span>
@@ -98,7 +72,7 @@ export const SubscriptionDonut: React.FC<SubscriptionDonutProps> = ({
           </div>
         </div>
 
-        {/* Legend matching screenshot */}
+        {/* Legend */}
         <div className="flex flex-col gap-3 min-w-[140px]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
