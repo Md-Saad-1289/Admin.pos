@@ -1,6 +1,7 @@
 import { AdminUser, Store, Subscription, SubscriptionPlan, Payment, SupportTicket, PlatformSettings, DashboardStats, AdminAuditLog } from '../types';
 
 const TOKEN_KEY = 'shoppos_admin_token';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
 
 export const authStorage = {
   getToken: () => localStorage.getItem(TOKEN_KEY),
@@ -19,7 +20,8 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const res = await fetch(endpoint, {
+  const url = `${API_BASE_URL}${endpoint}`;
+  const res = await fetch(url, {
     ...options,
     headers,
   });
@@ -38,7 +40,6 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
 }
 
 export const api = {
-  // Auth
   login: (credentials: { email: string; password: string }) =>
     request<{ success: boolean; token: string; admin: AdminUser }>('/api/admin/auth/login', {
       method: 'POST',
@@ -63,7 +64,6 @@ export const api = {
       body: JSON.stringify(passwords),
     }),
 
-  // Dashboard
   getDashboard: () =>
     request<{
       success: boolean;
@@ -74,7 +74,6 @@ export const api = {
       pendingPayments: any[];
     }>('/api/admin/dashboard'),
 
-  // Shops
   getShops: (params?: { search?: string; status?: string; storeType?: string; plan?: string; page?: number; limit?: number }) => {
     const query = new URLSearchParams();
     if (params?.search) query.append('search', params.search);
@@ -83,18 +82,10 @@ export const api = {
     if (params?.plan) query.append('plan', params.plan);
     if (params?.page) query.append('page', params.page.toString());
     if (params?.limit) query.append('limit', params.limit.toString());
-    return request<{
-      success: boolean;
-      total: number;
-      page: number;
-      limit: number;
-      totalPages: number;
-      shops: Store[];
-    }>(`/api/admin/shops?${query.toString()}`);
+    return request<{ success: boolean; total: number; page: number; limit: number; totalPages: number; shops: Store[] }>(`/api/admin/shops?${query.toString()}`);
   },
 
-  getShopDetails: (id: string) =>
-    request<{ success: boolean; shop: any }>(`/api/admin/shops/${id}`),
+  getShopDetails: (id: string) => request<{ success: boolean; shop: any }>(`/api/admin/shops/${id}`),
 
   createShop: (shopData: any) =>
     request<{ success: boolean; shop: Store; subscription: Subscription }>('/api/admin/shops', {
@@ -108,10 +99,7 @@ export const api = {
       body: JSON.stringify(updates),
     }),
 
-  deleteShop: (id: string) =>
-    request<{ success: boolean; message: string }>(`/api/admin/shops/${id}`, {
-      method: 'DELETE',
-    }),
+  deleteShop: (id: string) => request<{ success: boolean; message: string }>(`/api/admin/shops/${id}`, { method: 'DELETE' }),
 
   suspendShop: (id: string, reason?: string) =>
     request<{ success: boolean; message: string; shop: Store }>(`/api/admin/shops/${id}/suspend`, {
@@ -120,9 +108,7 @@ export const api = {
     }),
 
   activateShop: (id: string) =>
-    request<{ success: boolean; message: string; shop: Store }>(`/api/admin/shops/${id}/activate`, {
-      method: 'POST',
-    }),
+    request<{ success: boolean; message: string; shop: Store }>(`/api/admin/shops/${id}/activate`, { method: 'POST' }),
 
   updateShopSubscription: (id: string, data: { planId?: string; days?: number }) =>
     request<{ success: boolean; subscription: Subscription; plan: SubscriptionPlan }>(`/api/admin/shops/${id}/subscription`, {
@@ -130,7 +116,6 @@ export const api = {
       body: JSON.stringify(data),
     }),
 
-  // Staff Management
   addStaff: (shopId: string, staffData: { name: string; email: string; role: 'Manager' | 'Cashier'; password?: string }) =>
     request<{ success: boolean; staff: any }>(`/api/admin/shops/${shopId}/staff`, {
       method: 'POST',
@@ -144,13 +129,9 @@ export const api = {
     }),
 
   deleteStaff: (shopId: string, userId: string) =>
-    request<{ success: boolean; message: string }>(`/api/admin/shops/${shopId}/staff/${userId}`, {
-      method: 'DELETE',
-    }),
+    request<{ success: boolean; message: string }>(`/api/admin/shops/${shopId}/staff/${userId}`, { method: 'DELETE' }),
 
-  // Subscriptions & Plans
-  getPlans: () =>
-    request<{ success: boolean; plans: SubscriptionPlan[] }>('/api/admin/plans'),
+  getPlans: () => request<{ success: boolean; plans: SubscriptionPlan[] }>('/api/admin/plans'),
 
   createPlan: (data: Partial<SubscriptionPlan>) =>
     request<{ success: boolean; plan: SubscriptionPlan }>('/api/admin/plans', {
@@ -164,15 +145,10 @@ export const api = {
       body: JSON.stringify(updates),
     }),
 
-  deletePlan: (id: string) =>
-    request<{ success: boolean; message: string }>(`/api/admin/plans/${id}`, {
-      method: 'DELETE',
-    }),
+  deletePlan: (id: string) => request<{ success: boolean; message: string }>(`/api/admin/plans/${id}`, { method: 'DELETE' }),
 
-  getSubscriptions: () =>
-    request<{ success: boolean; subscriptions: Subscription[] }>('/api/admin/subscriptions'),
+  getSubscriptions: () => request<{ success: boolean; subscriptions: Subscription[] }>('/api/admin/subscriptions'),
 
-  // Payments
   getPayments: (params?: { search?: string; status?: string; method?: string; page?: number; limit?: number }) => {
     const query = new URLSearchParams();
     if (params?.search) query.append('search', params.search);
@@ -180,18 +156,10 @@ export const api = {
     if (params?.method) query.append('method', params.method);
     if (params?.page) query.append('page', params.page.toString());
     if (params?.limit) query.append('limit', params.limit.toString());
-    return request<{
-      success: boolean;
-      total: number;
-      page: number;
-      limit: number;
-      totalPages: number;
-      payments: Payment[];
-    }>(`/api/admin/payments?${query.toString()}`);
+    return request<{ success: boolean; total: number; page: number; limit: number; totalPages: number; payments: Payment[] }>(`/api/admin/payments?${query.toString()}`);
   },
 
-  getPaymentDetails: (id: string) =>
-    request<{ success: boolean; payment: Payment }>(`/api/admin/payments/${id}`),
+  getPaymentDetails: (id: string) => request<{ success: boolean; payment: Payment }>(`/api/admin/payments/${id}`),
 
   recordManualPayment: (data: { storeId: string; amount: number; method: string; transactionId?: string; notes?: string }) =>
     request<{ success: boolean; payment: Payment }>('/api/admin/payments/manual', {
@@ -200,21 +168,14 @@ export const api = {
     }),
 
   approvePayment: (id: string) =>
-    request<{ success: boolean; message: string; payment: Payment; subscription: Subscription }>(
-      `/api/admin/payments/${id}/approve`,
-      { method: 'POST' }
-    ),
+    request<{ success: boolean; message: string; payment: Payment; subscription: Subscription }>(`/api/admin/payments/${id}/approve`, { method: 'POST' }),
 
   rejectPayment: (id: string, reason?: string) =>
-    request<{ success: boolean; message: string; payment: Payment }>(
-      `/api/admin/payments/${id}/reject`,
-      {
-        method: 'POST',
-        body: JSON.stringify({ reason }),
-      }
-    ),
+    request<{ success: boolean; message: string; payment: Payment }>(`/api/admin/payments/${id}/reject`, {
+      method: 'POST',
+      body: JSON.stringify({ reason }),
+    }),
 
-  // Support
   getSupportTickets: (params?: { search?: string; status?: string; priority?: string }) => {
     const query = new URLSearchParams();
     if (params?.search) query.append('search', params.search);
@@ -223,8 +184,7 @@ export const api = {
     return request<{ success: boolean; tickets: SupportTicket[] }>(`/api/admin/support?${query.toString()}`);
   },
 
-  getSupportTicketDetails: (id: string) =>
-    request<{ success: boolean; ticket: SupportTicket }>(`/api/admin/support/${id}`),
+  getSupportTicketDetails: (id: string) => request<{ success: boolean; ticket: SupportTicket }>(`/api/admin/support/${id}`),
 
   createSupportTicket: (data: { storeId: string; subject: string; message: string; priority?: string }) =>
     request<{ success: boolean; ticket: SupportTicket }>('/api/admin/support', {
@@ -244,9 +204,7 @@ export const api = {
       body: JSON.stringify(updates),
     }),
 
-  // Settings, Team & Logs
-  getSettings: () =>
-    request<{ success: boolean; settings: PlatformSettings }>('/api/admin/settings'),
+  getSettings: () => request<{ success: boolean; settings: PlatformSettings }>('/api/admin/settings'),
 
   updateSettings: (settings: Partial<PlatformSettings>) =>
     request<{ success: boolean; settings: PlatformSettings }>('/api/admin/settings', {
@@ -254,8 +212,7 @@ export const api = {
       body: JSON.stringify(settings),
     }),
 
-  getTeam: () =>
-    request<{ success: boolean; admins: AdminUser[] }>('/api/admin/team'),
+  getTeam: () => request<{ success: boolean; admins: AdminUser[] }>('/api/admin/team'),
 
   addTeamMember: (data: { name: string; email: string; password: string; role: 'SuperAdmin' | 'Admin' }) =>
     request<{ success: boolean; admin: AdminUser }>('/api/admin/team', {
@@ -263,11 +220,7 @@ export const api = {
       body: JSON.stringify(data),
     }),
 
-  deleteTeamMember: (id: string) =>
-    request<{ success: boolean; message: string }>(`/api/admin/team/${id}`, {
-      method: 'DELETE',
-    }),
+  deleteTeamMember: (id: string) => request<{ success: boolean; message: string }>(`/api/admin/team/${id}`, { method: 'DELETE' }),
 
-  getAuditLogs: () =>
-    request<{ success: boolean; logs: AdminAuditLog[] }>('/api/admin/audit-logs'),
+  getAuditLogs: () => request<{ success: boolean; logs: AdminAuditLog[] }>('/api/admin/audit-logs'),
 };
