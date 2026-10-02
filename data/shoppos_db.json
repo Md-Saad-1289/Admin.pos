@@ -1,0 +1,1534 @@
+{
+  "admins": [
+    {
+      "_id": "admin_1",
+      "name": "Admin Manager",
+      "email": "admin@shoppos.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.vzNR14tgaCxc4HKr4DMyNJ7aHfRxgZ2",
+      "role": "SuperAdmin",
+      "status": "active",
+      "createdAt": "2026-01-10T09:00:00.000Z",
+      "lastLogin": "2026-10-02T08:02:23.648Z"
+    },
+    {
+      "_id": "admin_2",
+      "name": "Nayeem Chowdhury",
+      "email": "nayeem@shoppos.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.vzNR14tgaCxc4HKr4DMyNJ7aHfRxgZ2",
+      "role": "Admin",
+      "status": "active",
+      "createdAt": "2026-03-15T10:00:00.000Z",
+      "lastLogin": "2026-09-28T14:30:00.000Z"
+    }
+  ],
+  "stores": [
+    {
+      "_id": "store_1",
+      "name": "Green Mart",
+      "branch": "Dhanmondi Branch",
+      "ownerId": "user_owner_1",
+      "ownerName": "Rahim Khan",
+      "ownerEmail": "rahim@greenmart.com",
+      "phone": "+880 1712-345678",
+      "address": "Shop #14, Road 7, Dhanmondi, Dhaka",
+      "storeType": "Grocery",
+      "status": "active",
+      "createdAt": "2026-09-02T10:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "store_2",
+      "name": "Fashion Hub",
+      "branch": "Banani Outlet",
+      "ownerId": "user_owner_2",
+      "ownerName": "Karim Ahmed",
+      "ownerEmail": "karim@fashionhub.com",
+      "phone": "+880 1819-234567",
+      "address": "Plot 45, Road 11, Block D, Banani, Dhaka",
+      "storeType": "Fashion",
+      "status": "active",
+      "createdAt": "2026-08-15T11:20:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "store_3",
+      "name": "Tech Corner",
+      "branch": "IDB Bhaban Branch",
+      "ownerId": "user_owner_3",
+      "ownerName": "Hasan Ali",
+      "ownerEmail": "hasan@techcorner.com",
+      "phone": "+880 1911-987654",
+      "address": "Shop 204, 2nd Floor, BCS Computer City, IDB Bhaban, Dhaka",
+      "storeType": "Electronics",
+      "status": "suspended",
+      "createdAt": "2026-07-20T08:30:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "store_4",
+      "name": "Daily Needs",
+      "branch": "Uttara Sector 7",
+      "ownerId": "user_owner_4",
+      "ownerName": "Sadia Islam",
+      "ownerEmail": "sadia@dailyneeds.com",
+      "phone": "+880 1622-334455",
+      "address": "House 12, Road 5, Sector 7, Uttara, Dhaka",
+      "storeType": "Grocery",
+      "status": "active",
+      "createdAt": "2026-07-10T14:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "store_5",
+      "name": "Beauty World",
+      "branch": "Gulshan 1 Branch",
+      "ownerId": "user_owner_5",
+      "ownerName": "Nusrat Jahan",
+      "ownerEmail": "nusrat@beautyworld.com",
+      "phone": "+880 1755-667788",
+      "address": "Navana Tower, 1st Floor, Gulshan 1, Dhaka",
+      "storeType": "Fashion",
+      "status": "active",
+      "createdAt": "2026-06-28T16:45:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "store_6",
+      "name": "Home Essentials",
+      "branch": "Mirpur 10 Circle",
+      "ownerId": "user_owner_6",
+      "ownerName": "Rafiq Hasan",
+      "ownerEmail": "rafiq@homeessentials.com",
+      "phone": "+880 1833-445566",
+      "address": "Holding 88, Main Road, Mirpur 10, Dhaka",
+      "storeType": "Grocery",
+      "status": "active",
+      "createdAt": "2026-06-15T09:10:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "store_7",
+      "name": "Al-Madina Pharmacy",
+      "branch": "Mohammadpur Town Hall",
+      "ownerId": "user_owner_7",
+      "ownerName": "Dr. Tariqul Islam",
+      "ownerEmail": "tariqul@almadinapharmacy.com",
+      "phone": "+880 1711-223344",
+      "address": "Plot 8, Town Hall Market, Mohammadpur, Dhaka",
+      "storeType": "Pharmacy",
+      "status": "active",
+      "createdAt": "2026-05-12T09:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "store_8",
+      "name": "Gadget Freak",
+      "branch": "Jamuna Future Park",
+      "ownerId": "user_owner_8",
+      "ownerName": "Tanvir Mahmud",
+      "ownerEmail": "tanvir@gadgetfreak.com",
+      "phone": "+880 1922-446688",
+      "address": "Level 4, Zone B, Jamuna Future Park, Kuril, Dhaka",
+      "storeType": "Electronics",
+      "status": "active",
+      "createdAt": "2026-05-20T11:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "store_9",
+      "name": "Dhaka Taste Cafe",
+      "branch": "Bashundhara R/A",
+      "ownerId": "user_owner_9",
+      "ownerName": "Farhana Akter",
+      "ownerEmail": "farhana@dhakataste.com",
+      "phone": "+880 1844-556677",
+      "address": "Block C, Road 2, Bashundhara R/A, Dhaka",
+      "storeType": "Restaurant",
+      "status": "active",
+      "createdAt": "2026-06-01T14:30:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "store_10",
+      "name": "Apex Footwear Reseller",
+      "branch": "Khilgaon Taltola",
+      "ownerId": "user_owner_10",
+      "ownerName": "Zubair Hossain",
+      "ownerEmail": "zubair@apexkhilgaon.com",
+      "phone": "+880 1788-990011",
+      "address": "Shahid Baki Road, Taltola, Khilgaon, Dhaka",
+      "storeType": "Fashion",
+      "status": "active",
+      "createdAt": "2026-04-18T10:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "store_11",
+      "name": "Fresh Organic Foods",
+      "branch": "Gulshan 2",
+      "ownerId": "user_owner_11",
+      "ownerName": "Sultan Ahmed",
+      "ownerEmail": "sultan@freshorganic.com",
+      "phone": "+880 1733-557799",
+      "address": "Avenue 5, Road 84, Gulshan 2, Dhaka",
+      "storeType": "Grocery",
+      "status": "active",
+      "createdAt": "2026-03-10T12:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "store_12",
+      "name": "Care Pharmacy & Surgicals",
+      "branch": "Labaid Road Dhanmondi",
+      "ownerId": "user_owner_12",
+      "ownerName": "Dr. Shahinur Rahman",
+      "ownerEmail": "shahinur@carepharm.com",
+      "phone": "+880 1822-998877",
+      "address": "Road 4, Dhanmondi R/A, Dhaka",
+      "storeType": "Pharmacy",
+      "status": "active",
+      "createdAt": "2026-04-05T08:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "store_13",
+      "name": "Bengal Books & Stationers",
+      "branch": "Nilkhet Book Market",
+      "ownerId": "user_owner_13",
+      "ownerName": "Alamgir Kabir",
+      "ownerEmail": "alamgir@bengalbooks.com",
+      "phone": "+880 1933-221100",
+      "address": "Babupura Market, Nilkhet, Dhaka",
+      "storeType": "Grocery",
+      "status": "active",
+      "createdAt": "2026-04-22T13:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "store_14",
+      "name": "Smart Choice Electronics",
+      "branch": "Agrabad C/A Chittagong",
+      "ownerId": "user_owner_14",
+      "ownerName": "Mahbubur Rahman",
+      "ownerEmail": "mahbub@smartchoice.com",
+      "phone": "+880 1722-113355",
+      "address": "Agrabad Commercial Area, Chittagong",
+      "storeType": "Electronics",
+      "status": "active",
+      "createdAt": "2026-03-25T10:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "store_15",
+      "name": "Zaytoon Mediterranean Grill",
+      "branch": "Banani Road 11",
+      "ownerId": "user_owner_15",
+      "ownerName": "Imran Chowdhury",
+      "ownerEmail": "imran@zaytoon.com",
+      "phone": "+880 1855-667788",
+      "address": "House 82, Road 11, Banani, Dhaka",
+      "storeType": "Restaurant",
+      "status": "active",
+      "createdAt": "2026-02-14T15:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "store_16",
+      "name": "Shwapno Reseller Corner",
+      "branch": "Wari Ranken Street",
+      "ownerId": "user_owner_16",
+      "ownerName": "Nasreen Sultana",
+      "ownerEmail": "nasreen@warireseller.com",
+      "phone": "+880 1766-332211",
+      "address": "Ranken Street, Wari, Old Dhaka",
+      "storeType": "Grocery",
+      "status": "active",
+      "createdAt": "2026-03-01T11:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "store_17",
+      "name": "Chittagong Spices & Herbs",
+      "branch": "Khatungonj Market",
+      "ownerId": "user_owner_17",
+      "ownerName": "Iqbal Bahar",
+      "ownerEmail": "iqbal@khatungonj.com",
+      "phone": "+880 1811-445566",
+      "address": "Khatungonj Trading Hub, Chittagong",
+      "storeType": "Grocery",
+      "status": "active",
+      "createdAt": "2026-02-28T09:30:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "store_18",
+      "name": "Sylhet Tea House & Cafe",
+      "branch": "Zindabazar Sylhet",
+      "ownerId": "user_owner_18",
+      "ownerName": "Syed Mustafiz",
+      "ownerEmail": "mustafiz@sylhettea.com",
+      "phone": "+880 1744-889900",
+      "address": "Al-Hamra Shopping City, Zindabazar, Sylhet",
+      "storeType": "Restaurant",
+      "status": "active",
+      "createdAt": "2026-02-10T14:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "store_19",
+      "name": "Urban Threads Menswear",
+      "branch": "Shimanto Square Dhanmondi",
+      "ownerId": "user_owner_19",
+      "ownerName": "Ashraful Haque",
+      "ownerEmail": "ashraf@urbanthreads.com",
+      "phone": "+880 1977-665544",
+      "address": "Shimanto Square, Level 2, Dhanmondi, Dhaka",
+      "storeType": "Fashion",
+      "status": "active",
+      "createdAt": "2026-01-20T16:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "store_20",
+      "name": "MediPlus Healthcare",
+      "branch": "Chasara Narayanganj",
+      "ownerId": "user_owner_20",
+      "ownerName": "Dr. Muniruzzaman",
+      "ownerEmail": "munir@mediplus.com",
+      "phone": "+880 1611-778899",
+      "address": "BB Road, Chasara, Narayanganj",
+      "storeType": "Pharmacy",
+      "status": "active",
+      "createdAt": "2026-01-15T09:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "store_21",
+      "name": "ElectroZone Hub",
+      "branch": "Stadium Market Motijheel",
+      "ownerId": "user_owner_21",
+      "ownerName": "Kamal Hossain",
+      "ownerEmail": "kamal@electrozone.com",
+      "phone": "+880 1888-223344",
+      "address": "Bangabandhu Stadium Market, Motijheel, Dhaka",
+      "storeType": "Electronics",
+      "status": "suspended",
+      "createdAt": "2026-01-05T10:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "store_22",
+      "name": "Royal Bakery & Confectionery",
+      "branch": "Shantinagar Crossing",
+      "ownerId": "user_owner_22",
+      "ownerName": "Rashedul Karim",
+      "ownerEmail": "rashed@royalbakery.com",
+      "phone": "+880 1799-112233",
+      "address": "Shantinagar Main Road, Dhaka",
+      "storeType": "Restaurant",
+      "status": "active",
+      "createdAt": "2026-01-02T08:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "store_23",
+      "name": "Deshi Agro Super Shop",
+      "branch": "Badda Link Road",
+      "ownerId": "user_owner_23",
+      "ownerName": "Golam Kibria",
+      "ownerEmail": "kibria@deshiagro.com",
+      "phone": "+880 1955-443322",
+      "address": "Pragoti Sarani, Middle Badda, Dhaka",
+      "storeType": "Grocery",
+      "status": "active",
+      "createdAt": "2025-12-15T11:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "store_24",
+      "name": "Kids & Mom Boutique",
+      "branch": "Police Plaza Concord Gulshan",
+      "ownerId": "user_owner_24",
+      "ownerName": "Rumana Parveen",
+      "ownerEmail": "rumana@kidsmom.com",
+      "phone": "+880 1715-998877",
+      "address": "Level 3, Police Plaza Concord, Gulshan 1, Dhaka",
+      "storeType": "Fashion",
+      "status": "active",
+      "createdAt": "2025-12-01T15:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    }
+  ],
+  "users": [
+    {
+      "_id": "user_owner_1",
+      "storeId": "store_1",
+      "name": "Rahim Khan",
+      "email": "rahim@greenmart.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-01T06:59:24.268Z",
+      "createdAt": "2026-09-02T10:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_1_mgr",
+      "storeId": "store_1",
+      "name": "Rahim Associate",
+      "email": "manager@greenmart.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-28T12:45:00.143Z",
+      "createdAt": "2026-09-02T10:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_2",
+      "storeId": "store_2",
+      "name": "Karim Ahmed",
+      "email": "karim@fashionhub.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-01T15:49:23.125Z",
+      "createdAt": "2026-08-15T11:20:00.000Z"
+    },
+    {
+      "_id": "user_staff_2_mgr",
+      "storeId": "store_2",
+      "name": "Karim Associate",
+      "email": "manager@fashionhub.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-10-01T17:57:56.341Z",
+      "createdAt": "2026-08-15T11:20:00.000Z"
+    },
+    {
+      "_id": "user_owner_3",
+      "storeId": "store_3",
+      "name": "Hasan Ali",
+      "email": "hasan@techcorner.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-09-30T08:38:49.773Z",
+      "createdAt": "2026-07-20T08:30:00.000Z"
+    },
+    {
+      "_id": "user_staff_3_mgr",
+      "storeId": "store_3",
+      "name": "Hasan Associate",
+      "email": "manager@techcorner.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-29T09:50:57.511Z",
+      "createdAt": "2026-07-20T08:30:00.000Z"
+    },
+    {
+      "_id": "user_owner_4",
+      "storeId": "store_4",
+      "name": "Sadia Islam",
+      "email": "sadia@dailyneeds.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-02T01:59:34.859Z",
+      "createdAt": "2026-07-10T14:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_4_mgr",
+      "storeId": "store_4",
+      "name": "Sadia Associate",
+      "email": "manager@dailyneeds.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-30T09:33:19.220Z",
+      "createdAt": "2026-07-10T14:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_5",
+      "storeId": "store_5",
+      "name": "Nusrat Jahan",
+      "email": "nusrat@beautyworld.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-02T00:52:49.762Z",
+      "createdAt": "2026-06-28T16:45:00.000Z"
+    },
+    {
+      "_id": "user_staff_5_mgr",
+      "storeId": "store_5",
+      "name": "Nusrat Associate",
+      "email": "manager@beautyworld.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-28T15:51:25.356Z",
+      "createdAt": "2026-06-28T16:45:00.000Z"
+    },
+    {
+      "_id": "user_owner_6",
+      "storeId": "store_6",
+      "name": "Rafiq Hasan",
+      "email": "rafiq@homeessentials.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-09-30T16:52:04.024Z",
+      "createdAt": "2026-06-15T09:10:00.000Z"
+    },
+    {
+      "_id": "user_staff_6_mgr",
+      "storeId": "store_6",
+      "name": "Rafiq Associate",
+      "email": "manager@homeessentials.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-30T05:08:40.413Z",
+      "createdAt": "2026-06-15T09:10:00.000Z"
+    },
+    {
+      "_id": "user_owner_7",
+      "storeId": "store_7",
+      "name": "Dr. Tariqul Islam",
+      "email": "tariqul@almadinapharmacy.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-09-30T07:10:32.026Z",
+      "createdAt": "2026-05-12T09:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_7_mgr",
+      "storeId": "store_7",
+      "name": "Dr. Associate",
+      "email": "manager@almadinapharmacy.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-10-01T00:52:56.912Z",
+      "createdAt": "2026-05-12T09:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_8",
+      "storeId": "store_8",
+      "name": "Tanvir Mahmud",
+      "email": "tanvir@gadgetfreak.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-02T01:30:44.567Z",
+      "createdAt": "2026-05-20T11:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_8_mgr",
+      "storeId": "store_8",
+      "name": "Tanvir Associate",
+      "email": "manager@gadgetfreak.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-29T19:48:02.838Z",
+      "createdAt": "2026-05-20T11:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_9",
+      "storeId": "store_9",
+      "name": "Farhana Akter",
+      "email": "farhana@dhakataste.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-01T21:28:09.406Z",
+      "createdAt": "2026-06-01T14:30:00.000Z"
+    },
+    {
+      "_id": "user_staff_9_mgr",
+      "storeId": "store_9",
+      "name": "Farhana Associate",
+      "email": "manager@dhakataste.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-30T19:59:07.492Z",
+      "createdAt": "2026-06-01T14:30:00.000Z"
+    },
+    {
+      "_id": "user_owner_10",
+      "storeId": "store_10",
+      "name": "Zubair Hossain",
+      "email": "zubair@apexkhilgaon.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-02T02:45:04.170Z",
+      "createdAt": "2026-04-18T10:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_10_mgr",
+      "storeId": "store_10",
+      "name": "Zubair Associate",
+      "email": "manager@apexkhilgaon.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-29T18:24:00.564Z",
+      "createdAt": "2026-04-18T10:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_11",
+      "storeId": "store_11",
+      "name": "Sultan Ahmed",
+      "email": "sultan@freshorganic.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-02T02:41:15.164Z",
+      "createdAt": "2026-03-10T12:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_11_mgr",
+      "storeId": "store_11",
+      "name": "Sultan Associate",
+      "email": "manager@freshorganic.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-10-01T12:39:51.117Z",
+      "createdAt": "2026-03-10T12:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_12",
+      "storeId": "store_12",
+      "name": "Dr. Shahinur Rahman",
+      "email": "shahinur@carepharm.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-02T02:56:23.193Z",
+      "createdAt": "2026-04-05T08:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_12_mgr",
+      "storeId": "store_12",
+      "name": "Dr. Associate",
+      "email": "manager@carepharm.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-28T08:00:15.722Z",
+      "createdAt": "2026-04-05T08:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_13",
+      "storeId": "store_13",
+      "name": "Alamgir Kabir",
+      "email": "alamgir@bengalbooks.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-01T05:19:49.829Z",
+      "createdAt": "2026-04-22T13:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_13_mgr",
+      "storeId": "store_13",
+      "name": "Alamgir Associate",
+      "email": "manager@bengalbooks.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-10-01T04:11:02.169Z",
+      "createdAt": "2026-04-22T13:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_14",
+      "storeId": "store_14",
+      "name": "Mahbubur Rahman",
+      "email": "mahbub@smartchoice.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-01T13:11:44.601Z",
+      "createdAt": "2026-03-25T10:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_14_mgr",
+      "storeId": "store_14",
+      "name": "Mahbubur Associate",
+      "email": "manager@smartchoice.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-28T18:06:23.937Z",
+      "createdAt": "2026-03-25T10:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_15",
+      "storeId": "store_15",
+      "name": "Imran Chowdhury",
+      "email": "imran@zaytoon.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-02T04:13:34.970Z",
+      "createdAt": "2026-02-14T15:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_15_mgr",
+      "storeId": "store_15",
+      "name": "Imran Associate",
+      "email": "manager@zaytoon.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-29T01:25:52.272Z",
+      "createdAt": "2026-02-14T15:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_16",
+      "storeId": "store_16",
+      "name": "Nasreen Sultana",
+      "email": "nasreen@warireseller.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-01T01:50:03.042Z",
+      "createdAt": "2026-03-01T11:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_16_mgr",
+      "storeId": "store_16",
+      "name": "Nasreen Associate",
+      "email": "manager@warireseller.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-28T09:31:29.475Z",
+      "createdAt": "2026-03-01T11:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_17",
+      "storeId": "store_17",
+      "name": "Iqbal Bahar",
+      "email": "iqbal@khatungonj.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-01T14:00:55.900Z",
+      "createdAt": "2026-02-28T09:30:00.000Z"
+    },
+    {
+      "_id": "user_staff_17_mgr",
+      "storeId": "store_17",
+      "name": "Iqbal Associate",
+      "email": "manager@khatungonj.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-10-01T20:45:46.502Z",
+      "createdAt": "2026-02-28T09:30:00.000Z"
+    },
+    {
+      "_id": "user_owner_18",
+      "storeId": "store_18",
+      "name": "Syed Mustafiz",
+      "email": "mustafiz@sylhettea.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-01T04:36:16.422Z",
+      "createdAt": "2026-02-10T14:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_18_mgr",
+      "storeId": "store_18",
+      "name": "Syed Associate",
+      "email": "manager@sylhettea.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-29T00:39:16.644Z",
+      "createdAt": "2026-02-10T14:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_19",
+      "storeId": "store_19",
+      "name": "Ashraful Haque",
+      "email": "ashraf@urbanthreads.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-01T03:38:47.841Z",
+      "createdAt": "2026-01-20T16:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_19_mgr",
+      "storeId": "store_19",
+      "name": "Ashraful Associate",
+      "email": "manager@urbanthreads.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-30T17:06:09.318Z",
+      "createdAt": "2026-01-20T16:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_20",
+      "storeId": "store_20",
+      "name": "Dr. Muniruzzaman",
+      "email": "munir@mediplus.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-01T08:30:31.106Z",
+      "createdAt": "2026-01-15T09:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_20_mgr",
+      "storeId": "store_20",
+      "name": "Dr. Associate",
+      "email": "manager@mediplus.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-29T16:09:53.100Z",
+      "createdAt": "2026-01-15T09:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_21",
+      "storeId": "store_21",
+      "name": "Kamal Hossain",
+      "email": "kamal@electrozone.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-01T07:19:06.785Z",
+      "createdAt": "2026-01-05T10:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_21_mgr",
+      "storeId": "store_21",
+      "name": "Kamal Associate",
+      "email": "manager@electrozone.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-30T17:58:49.072Z",
+      "createdAt": "2026-01-05T10:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_22",
+      "storeId": "store_22",
+      "name": "Rashedul Karim",
+      "email": "rashed@royalbakery.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-01T10:54:23.642Z",
+      "createdAt": "2026-01-02T08:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_22_mgr",
+      "storeId": "store_22",
+      "name": "Rashedul Associate",
+      "email": "manager@royalbakery.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-09-30T18:07:25.799Z",
+      "createdAt": "2026-01-02T08:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_23",
+      "storeId": "store_23",
+      "name": "Golam Kibria",
+      "email": "kibria@deshiagro.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-10-01T23:07:03.601Z",
+      "createdAt": "2025-12-15T11:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_23_mgr",
+      "storeId": "store_23",
+      "name": "Golam Associate",
+      "email": "manager@deshiagro.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-10-01T02:53:02.744Z",
+      "createdAt": "2025-12-15T11:00:00.000Z"
+    },
+    {
+      "_id": "user_owner_24",
+      "storeId": "store_24",
+      "name": "Rumana Parveen",
+      "email": "rumana@kidsmom.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Owner",
+      "status": "active",
+      "lastLogin": "2026-09-30T08:32:38.636Z",
+      "createdAt": "2025-12-01T15:00:00.000Z"
+    },
+    {
+      "_id": "user_staff_24_mgr",
+      "storeId": "store_24",
+      "name": "Rumana Associate",
+      "email": "manager@kidsmom.com",
+      "passwordHash": "$2b$10$7HIU.ZLqNQlaUDiC4.3sK.az6abqjWN/OLfiQqhBOh3LFnOoRmKCe",
+      "role": "Manager",
+      "status": "active",
+      "lastLogin": "2026-10-01T12:12:18.593Z",
+      "createdAt": "2025-12-01T15:00:00.000Z"
+    }
+  ],
+  "subscription_plans": [
+    {
+      "_id": "plan_basic",
+      "name": "Basic",
+      "price": 499,
+      "billingCycle": "monthly",
+      "features": [
+        "2 Staff",
+        "500 Products",
+        "POS Access",
+        "Daily Reports"
+      ],
+      "maxUsers": 2,
+      "maxProducts": 500,
+      "status": "active"
+    },
+    {
+      "_id": "plan_pro",
+      "name": "Pro",
+      "price": 999,
+      "billingCycle": "monthly",
+      "features": [
+        "10 Staff",
+        "5,000 Products",
+        "POS + Advanced Reports",
+        "Inventory Alerts",
+        "Multi-Register Support"
+      ],
+      "maxUsers": 10,
+      "maxProducts": 5000,
+      "status": "active"
+    },
+    {
+      "_id": "plan_enterprise",
+      "name": "Enterprise",
+      "price": 1999,
+      "billingCycle": "monthly",
+      "features": [
+        "Unlimited Staff",
+        "Unlimited Products",
+        "Custom Reports",
+        "Priority 24/7 SLA",
+        "API & Webhook Access"
+      ],
+      "maxUsers": 9999,
+      "maxProducts": 99999,
+      "status": "active"
+    }
+  ],
+  "subscriptions": [
+    {
+      "_id": "sub_1",
+      "storeId": "store_1",
+      "planId": "plan_pro",
+      "status": "active",
+      "startDate": "2026-09-30T06:48:37.986Z",
+      "endDate": "2026-10-30T06:48:37.986Z",
+      "createdAt": "2026-09-02T10:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "sub_2",
+      "storeId": "store_2",
+      "planId": "plan_basic",
+      "status": "active",
+      "startDate": "2026-09-16T06:48:37.986Z",
+      "endDate": "2026-10-16T06:48:37.986Z",
+      "createdAt": "2026-08-15T11:20:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "sub_3",
+      "storeId": "store_3",
+      "planId": "plan_pro",
+      "status": "suspended",
+      "startDate": "2026-08-23T06:48:37.986Z",
+      "endDate": "2026-09-22T06:48:37.986Z",
+      "createdAt": "2026-07-20T08:30:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "sub_4",
+      "storeId": "store_4",
+      "planId": "plan_basic",
+      "status": "active",
+      "startDate": "2026-09-20T06:48:37.986Z",
+      "endDate": "2026-10-20T06:48:37.986Z",
+      "createdAt": "2026-07-10T14:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "sub_5",
+      "storeId": "store_5",
+      "planId": "plan_pro",
+      "status": "active",
+      "startDate": "2026-09-24T06:48:37.986Z",
+      "endDate": "2026-10-24T06:48:37.986Z",
+      "createdAt": "2026-06-28T16:45:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "sub_6",
+      "storeId": "store_6",
+      "planId": "plan_basic",
+      "status": "expiring",
+      "startDate": "2026-09-04T06:48:37.986Z",
+      "endDate": "2026-10-04T06:48:37.986Z",
+      "createdAt": "2026-06-15T09:10:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "sub_7",
+      "storeId": "store_7",
+      "planId": "plan_enterprise",
+      "status": "active",
+      "startDate": "2027-06-29T06:48:37.986Z",
+      "endDate": "2027-07-29T06:48:37.986Z",
+      "createdAt": "2026-05-12T09:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "sub_8",
+      "storeId": "store_8",
+      "planId": "plan_pro",
+      "status": "active",
+      "startDate": "2026-09-22T06:48:37.986Z",
+      "endDate": "2026-10-22T06:48:37.986Z",
+      "createdAt": "2026-05-20T11:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "sub_9",
+      "storeId": "store_9",
+      "planId": "plan_basic",
+      "status": "active",
+      "startDate": "2026-09-17T06:48:37.986Z",
+      "endDate": "2026-10-17T06:48:37.986Z",
+      "createdAt": "2026-06-01T14:30:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.986Z"
+    },
+    {
+      "_id": "sub_10",
+      "storeId": "store_10",
+      "planId": "plan_basic",
+      "status": "expiring",
+      "startDate": "2026-09-05T06:48:37.986Z",
+      "endDate": "2026-10-05T06:48:37.986Z",
+      "createdAt": "2026-04-18T10:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "sub_11",
+      "storeId": "store_11",
+      "planId": "plan_enterprise",
+      "status": "active",
+      "startDate": "2027-03-01T06:48:37.986Z",
+      "endDate": "2027-03-31T06:48:37.986Z",
+      "createdAt": "2026-03-10T12:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "sub_12",
+      "storeId": "store_12",
+      "planId": "plan_pro",
+      "status": "active",
+      "startDate": "2026-09-27T06:48:37.986Z",
+      "endDate": "2026-10-27T06:48:37.986Z",
+      "createdAt": "2026-04-05T08:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "sub_13",
+      "storeId": "store_13",
+      "planId": "plan_basic",
+      "status": "active",
+      "startDate": "2026-09-14T06:48:37.986Z",
+      "endDate": "2026-10-14T06:48:37.986Z",
+      "createdAt": "2026-04-22T13:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "sub_14",
+      "storeId": "store_14",
+      "planId": "plan_pro",
+      "status": "active",
+      "startDate": "2026-09-21T06:48:37.986Z",
+      "endDate": "2026-10-21T06:48:37.986Z",
+      "createdAt": "2026-03-25T10:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "sub_15",
+      "storeId": "store_15",
+      "planId": "plan_enterprise",
+      "status": "active",
+      "startDate": "2026-12-01T06:48:37.986Z",
+      "endDate": "2026-12-31T06:48:37.986Z",
+      "createdAt": "2026-02-14T15:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "sub_16",
+      "storeId": "store_16",
+      "planId": "plan_pro",
+      "status": "active",
+      "startDate": "2026-09-18T06:48:37.986Z",
+      "endDate": "2026-10-18T06:48:37.986Z",
+      "createdAt": "2026-03-01T11:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "sub_17",
+      "storeId": "store_17",
+      "planId": "plan_basic",
+      "status": "active",
+      "startDate": "2026-09-13T06:48:37.986Z",
+      "endDate": "2026-10-13T06:48:37.986Z",
+      "createdAt": "2026-02-28T09:30:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "sub_18",
+      "storeId": "store_18",
+      "planId": "plan_basic",
+      "status": "active",
+      "startDate": "2026-09-23T06:48:37.986Z",
+      "endDate": "2026-10-23T06:48:37.986Z",
+      "createdAt": "2026-02-10T14:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "sub_19",
+      "storeId": "store_19",
+      "planId": "plan_pro",
+      "status": "active",
+      "startDate": "2026-09-29T06:48:37.986Z",
+      "endDate": "2026-10-29T06:48:37.986Z",
+      "createdAt": "2026-01-20T16:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "sub_20",
+      "storeId": "store_20",
+      "planId": "plan_pro",
+      "status": "active",
+      "startDate": "2026-09-19T06:48:37.986Z",
+      "endDate": "2026-10-19T06:48:37.986Z",
+      "createdAt": "2026-01-15T09:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "sub_21",
+      "storeId": "store_21",
+      "planId": "plan_basic",
+      "status": "suspended",
+      "startDate": "2026-08-28T06:48:37.986Z",
+      "endDate": "2026-09-27T06:48:37.986Z",
+      "createdAt": "2026-01-05T10:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "sub_22",
+      "storeId": "store_22",
+      "planId": "plan_basic",
+      "status": "active",
+      "startDate": "2026-09-15T06:48:37.986Z",
+      "endDate": "2026-10-15T06:48:37.986Z",
+      "createdAt": "2026-01-02T08:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "sub_23",
+      "storeId": "store_23",
+      "planId": "plan_pro",
+      "status": "active",
+      "startDate": "2026-10-01T06:48:37.986Z",
+      "endDate": "2026-10-31T06:48:37.986Z",
+      "createdAt": "2025-12-15T11:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "sub_24",
+      "storeId": "store_24",
+      "planId": "plan_pro",
+      "status": "active",
+      "startDate": "2026-09-26T06:48:37.986Z",
+      "endDate": "2026-10-26T06:48:37.986Z",
+      "createdAt": "2025-12-01T15:00:00.000Z",
+      "updatedAt": "2026-10-02T06:48:37.987Z"
+    }
+  ],
+  "payments": [
+    {
+      "_id": "pay_1",
+      "storeId": "store_1",
+      "subscriptionId": "sub_1",
+      "amount": 999,
+      "method": "bKash",
+      "transactionId": "TXN-92831",
+      "status": "pending",
+      "approvedBy": null,
+      "approvedAt": null,
+      "createdAt": "2026-10-02T06:23:37.986Z"
+    },
+    {
+      "_id": "pay_2",
+      "storeId": "store_6",
+      "subscriptionId": "sub_6",
+      "amount": 499,
+      "method": "Nagad",
+      "transactionId": "TXN-92834",
+      "status": "pending",
+      "approvedBy": null,
+      "approvedAt": null,
+      "createdAt": "2026-10-02T05:13:37.986Z"
+    },
+    {
+      "_id": "pay_3",
+      "storeId": "store_10",
+      "subscriptionId": "sub_10",
+      "amount": 499,
+      "method": "bKash",
+      "transactionId": "TXN-92835",
+      "status": "pending",
+      "approvedBy": null,
+      "approvedAt": null,
+      "createdAt": "2026-10-02T04:28:37.986Z"
+    },
+    {
+      "_id": "pay_4",
+      "storeId": "store_3",
+      "subscriptionId": "sub_3",
+      "amount": 999,
+      "method": "Nagad",
+      "transactionId": "TXN-92830",
+      "status": "approved",
+      "approvedBy": "admin_1",
+      "approvedAt": "2026-10-01T06:48:37.986Z",
+      "createdAt": "2026-10-01T06:21:57.986Z"
+    },
+    {
+      "_id": "pay_5",
+      "storeId": "store_2",
+      "subscriptionId": "sub_2",
+      "amount": 1499,
+      "method": "bKash",
+      "transactionId": "TXN-92829",
+      "status": "approved",
+      "approvedBy": "admin_1",
+      "approvedAt": "2026-09-30T06:48:37.986Z",
+      "createdAt": "2026-09-30T05:48:37.986Z"
+    },
+    {
+      "_id": "pay_6",
+      "storeId": "store_4",
+      "subscriptionId": "sub_4",
+      "amount": 999,
+      "method": "Card",
+      "transactionId": "TXN-92828",
+      "status": "rejected",
+      "approvedBy": "admin_1",
+      "approvedAt": "2026-09-29T06:48:37.986Z",
+      "rejectionReason": "Invalid transaction ID provided on gateway slip",
+      "createdAt": "2026-09-29T04:48:37.986Z"
+    },
+    {
+      "_id": "pay_7",
+      "storeId": "store_5",
+      "subscriptionId": "sub_5",
+      "amount": 1499,
+      "method": "Nagad",
+      "transactionId": "TXN-92827",
+      "status": "approved",
+      "approvedBy": "admin_1",
+      "approvedAt": "2026-09-28T06:48:37.986Z",
+      "createdAt": "2026-09-28T06:18:37.986Z"
+    },
+    {
+      "_id": "pay_8",
+      "storeId": "store_7",
+      "subscriptionId": "sub_7",
+      "amount": 1999,
+      "method": "Bank",
+      "transactionId": "TXN-92820",
+      "status": "approved",
+      "approvedBy": "admin_1",
+      "approvedAt": "2026-09-26T06:48:37.986Z",
+      "createdAt": "2026-09-26T05:48:37.986Z"
+    },
+    {
+      "_id": "pay_9",
+      "storeId": "store_8",
+      "subscriptionId": "sub_8",
+      "amount": 999,
+      "method": "bKash",
+      "transactionId": "TXN-92818",
+      "status": "approved",
+      "approvedBy": "admin_1",
+      "approvedAt": "2026-09-24T06:48:37.986Z",
+      "createdAt": "2026-09-24T06:08:37.986Z"
+    },
+    {
+      "_id": "pay_10",
+      "storeId": "store_11",
+      "subscriptionId": "sub_11",
+      "amount": 1999,
+      "method": "Card",
+      "transactionId": "TXN-92815",
+      "status": "approved",
+      "approvedBy": "admin_1",
+      "approvedAt": "2026-09-21T06:48:37.986Z",
+      "createdAt": "2026-09-21T06:28:37.986Z"
+    },
+    {
+      "_id": "pay_11",
+      "storeId": "store_15",
+      "subscriptionId": "sub_15",
+      "amount": 1999,
+      "method": "bKash",
+      "transactionId": "TXN-92810",
+      "status": "approved",
+      "approvedBy": "admin_1",
+      "approvedAt": "2026-09-18T06:48:37.986Z",
+      "createdAt": "2026-09-18T05:18:37.986Z"
+    },
+    {
+      "_id": "pay_12",
+      "storeId": "store_19",
+      "subscriptionId": "sub_19",
+      "amount": 999,
+      "method": "Nagad",
+      "transactionId": "TXN-92805",
+      "status": "approved",
+      "approvedBy": "admin_1",
+      "approvedAt": "2026-09-14T06:48:37.986Z",
+      "createdAt": "2026-09-14T05:55:17.986Z"
+    }
+  ],
+  "support_tickets": [
+    {
+      "_id": "ticket_1",
+      "storeId": "store_1",
+      "subject": "Payment issue",
+      "message": "I completed the payment but my subscription is still inactive.",
+      "priority": "High",
+      "status": "Open",
+      "replies": [
+        {
+          "id": "rep_1",
+          "senderRole": "owner",
+          "senderName": "Rahim Khan",
+          "message": "I completed the payment but my subscription is still inactive.",
+          "createdAt": "2026-10-02T10:24:00.000Z"
+        },
+        {
+          "id": "rep_2",
+          "senderRole": "admin",
+          "senderName": "Admin Manager",
+          "message": "We have received your payment. Your subscription will be activated within a few minutes.",
+          "createdAt": "2026-10-02T11:02:00.000Z"
+        }
+      ],
+      "createdAt": "2026-10-02T10:24:00.000Z",
+      "updatedAt": "2026-10-02T11:02:00.000Z"
+    },
+    {
+      "_id": "ticket_2",
+      "storeId": "store_2",
+      "subject": "Printer setup",
+      "message": "Thermal receipt printer EPSON TM-T88VI cuts paper halfway through receipt printing.",
+      "priority": "Medium",
+      "status": "In Progress",
+      "replies": [
+        {
+          "id": "rep_3",
+          "senderRole": "owner",
+          "senderName": "Karim Ahmed",
+          "message": "Thermal receipt printer cuts paper halfway through receipt printing.",
+          "createdAt": "2026-10-01T15:20:00.000Z"
+        }
+      ],
+      "createdAt": "2026-10-01T15:20:00.000Z",
+      "updatedAt": "2026-10-01T16:00:00.000Z"
+    },
+    {
+      "_id": "ticket_3",
+      "storeId": "store_3",
+      "subject": "Login problem",
+      "message": "Staff members cannot access POS terminal screen during shift changes.",
+      "priority": "Medium",
+      "status": "Open",
+      "replies": [],
+      "createdAt": "2026-09-30T14:10:00.000Z",
+      "updatedAt": "2026-09-30T14:10:00.000Z"
+    },
+    {
+      "_id": "ticket_4",
+      "storeId": "store_4",
+      "subject": "Feature request",
+      "message": "Requesting bulk CSV import for vegetable inventory with expiry date tracking.",
+      "priority": "Low",
+      "status": "Resolved",
+      "replies": [
+        {
+          "id": "rep_4",
+          "senderRole": "owner",
+          "senderName": "Sadia Islam",
+          "message": "Requesting bulk CSV import for vegetable inventory.",
+          "createdAt": "2026-09-28T09:00:00.000Z"
+        },
+        {
+          "id": "rep_5",
+          "senderRole": "admin",
+          "senderName": "Admin Manager",
+          "message": "This feature is now supported under Products > Import CSV. Thank you!",
+          "createdAt": "2026-09-28T14:00:00.000Z"
+        }
+      ],
+      "createdAt": "2026-09-28T09:00:00.000Z",
+      "updatedAt": "2026-09-28T14:00:00.000Z"
+    },
+    {
+      "_id": "ticket_5",
+      "storeId": "store_5",
+      "subject": "Billing question",
+      "message": "Would like to upgrade from Pro to Annual billing. Is there a 2-month discount?",
+      "priority": "Medium",
+      "status": "In Progress",
+      "replies": [],
+      "createdAt": "2026-09-25T11:45:00.000Z",
+      "updatedAt": "2026-09-25T11:45:00.000Z"
+    }
+  ],
+  "admin_audit_logs": [
+    {
+      "_id": "ce9b72dd8219b102b838aceb",
+      "adminId": "admin_1",
+      "adminName": "Admin Manager",
+      "action": "Login",
+      "targetId": "admin_1",
+      "details": {
+        "ip": "::ffff:127.0.0.1",
+        "userAgent": "curl/7.88.1"
+      },
+      "timestamp": "2026-10-02T08:02:23.649Z"
+    },
+    {
+      "_id": "06e4b32008b9300cfd96bf70",
+      "adminId": "admin_1",
+      "adminName": "Admin Manager",
+      "action": "Login",
+      "targetId": "admin_1",
+      "details": {
+        "ip": "::ffff:127.0.0.1",
+        "userAgent": "curl/7.88.1"
+      },
+      "timestamp": "2026-10-02T06:48:44.469Z"
+    },
+    {
+      "_id": "log_1",
+      "adminId": "admin_1",
+      "adminName": "Admin Manager",
+      "action": "Login",
+      "targetId": "admin_1",
+      "details": {
+        "ip": "127.0.0.1",
+        "userAgent": "Chrome/ShopPOS-Admin"
+      },
+      "timestamp": "2026-10-02T06:48:37.987Z"
+    },
+    {
+      "_id": "log_2",
+      "adminId": "admin_1",
+      "adminName": "Admin Manager",
+      "action": "Approve payment",
+      "targetId": "pay_4",
+      "details": {
+        "storeName": "Tech Corner",
+        "amount": 999,
+        "transactionId": "TXN-92830"
+      },
+      "timestamp": "2026-10-01T06:48:37.986Z"
+    },
+    {
+      "_id": "log_3",
+      "adminId": "admin_1",
+      "adminName": "Admin Manager",
+      "action": "Suspend shop",
+      "targetId": "store_3",
+      "details": {
+        "storeName": "Tech Corner",
+        "reason": "Unverified business documents"
+      },
+      "timestamp": "2026-09-30T06:48:37.986Z"
+    }
+  ],
+  "sales": [
+    {
+      "_id": "sale_1",
+      "storeId": "store_1",
+      "invoiceNumber": "INV-2026-0048",
+      "totalAmount": 3450,
+      "itemsCount": 6,
+      "customerName": "Tanvir Hossain",
+      "paymentMethod": "Cash",
+      "createdAt": "2026-10-02T02:48:37.986Z"
+    },
+    {
+      "_id": "sale_2",
+      "storeId": "store_1",
+      "invoiceNumber": "INV-2026-0047",
+      "totalAmount": 1820,
+      "itemsCount": 3,
+      "customerName": "Ayesha Siddiqua",
+      "paymentMethod": "bKash",
+      "createdAt": "2026-10-01T12:48:37.986Z"
+    },
+    {
+      "_id": "sale_3",
+      "storeId": "store_1",
+      "invoiceNumber": "INV-2026-0046",
+      "totalAmount": 7180,
+      "itemsCount": 11,
+      "customerName": "Mahmudul Hasan",
+      "paymentMethod": "Card",
+      "createdAt": "2026-09-30T22:48:37.986Z"
+    }
+  ],
+  "settings": {
+    "platformName": "ShopPOS",
+    "supportEmail": "support@shoppos.com",
+    "currency": "BDT",
+    "currencySymbol": "৳",
+    "defaultTrialDays": 14,
+    "maintenanceMode": false,
+    "bkashMerchantNumber": "01811-998877",
+    "nagadMerchantNumber": "01711-223344",
+    "bankName": "City Bank PLC",
+    "bankBranch": "Dhanmondi Branch",
+    "bankAccountName": "ShopPOS Bangladesh Ltd.",
+    "bankAccountNumber": "1102938475001"
+  }
+}

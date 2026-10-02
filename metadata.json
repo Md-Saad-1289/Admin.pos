@@ -1,0 +1,6 @@
+{
+  "name": "ShopPOS Admin Panel",
+  "description": "Production-ready Admin Web App and SaaS Control Panel for ShopPOS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
