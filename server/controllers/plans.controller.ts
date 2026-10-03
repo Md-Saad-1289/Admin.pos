@@ -2,14 +2,22 @@ import { Response } from 'express';
 import { SubscriptionPlan, SubscriptionModel, StoreModel } from '../models/index.ts';
 import { isDbConnected, fallbackStore } from '../db.ts';
 import { AdminAuthRequest } from '../middleware/auth.middleware.ts';
+import { dbCache } from '../utils/cache.ts';
 
 export async function getPlans(_req: AdminAuthRequest, res: Response) {
   try {
+    const cached = dbCache.get<any>('plans');
+    if (cached) return res.json(cached);
+
     if (isDbConnected()) {
-      const plans = await SubscriptionPlan.find().sort({ price: 1 });
-      return res.json({ success: true, plans });
+      const plans = await SubscriptionPlan.find().sort({ price: 1 }).lean();
+      const responseData = { success: true, plans };
+      dbCache.set('plans', responseData, 300);
+      return res.json(responseData);
     } else {
-      return res.json({ success: true, plans: fallbackStore.subscriptionPlans });
+      const responseData = { success: true, plans: fallbackStore.subscriptionPlans };
+      dbCache.set('plans', responseData, 300);
+      return res.json(responseData);
     }
   } catch (err: any) {
     return res.status(500).json({ success: false, error: err.message || 'Failed to fetch plans' });
@@ -33,6 +41,8 @@ export async function createPlan(req: AdminAuthRequest, res: Response) {
         maxProducts: Number(maxProducts),
         status: 'active',
       });
+      dbCache.delete('plans');
+      dbCache.delete('dashboard');
       return res.status(201).json({ success: true, plan });
     } else {
       const plan = {
@@ -47,6 +57,8 @@ export async function createPlan(req: AdminAuthRequest, res: Response) {
         createdAt: new Date().toISOString(),
       };
       fallbackStore.subscriptionPlans.push(plan);
+      dbCache.delete('plans');
+      dbCache.delete('dashboard');
       return res.status(201).json({ success: true, plan });
     }
   } catch (err: any) {
@@ -59,6 +71,8 @@ export async function updatePlan(req: AdminAuthRequest, res: Response) {
   const updates = req.body;
 
   try {
+    dbCache.delete('plans');
+    dbCache.delete('dashboard');
     if (isDbConnected()) {
       const plan = await SubscriptionPlan.findByIdAndUpdate(id, updates, { new: true });
       if (!plan) return res.status(404).json({ success: false, error: 'Plan not found' });
@@ -78,6 +92,8 @@ export async function deletePlan(req: AdminAuthRequest, res: Response) {
   const { id } = req.params;
 
   try {
+    dbCache.delete('plans');
+    dbCache.delete('dashboard');
     if (isDbConnected()) {
       await SubscriptionPlan.findByIdAndDelete(id);
       return res.json({ success: true, message: 'Plan deleted successfully' });

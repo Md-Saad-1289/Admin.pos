@@ -23,15 +23,23 @@ export async function getPayments(req: AdminAuthRequest, res: Response) {
         query.transactionId = new RegExp(search as string, 'i');
       }
 
-      const total = await PaymentModel.countDocuments(query);
-      const payments = await PaymentModel.find(query)
-        .sort({ createdAt: -1 })
-        .skip((p - 1) * lim)
-        .limit(lim);
+      const [total, payments] = await Promise.all([
+        PaymentModel.countDocuments(query),
+        PaymentModel.find(query)
+          .sort({ createdAt: -1 })
+          .skip((p - 1) * lim)
+          .limit(lim)
+          .lean(),
+      ]);
 
-      const allStores = await StoreModel.find();
+      const storeIds = [...new Set(payments.map((pay) => pay.storeId))];
+      const stores = await StoreModel.find({ _id: { $in: storeIds } })
+        .select('name ownerName')
+        .lean();
+      const storeMap = new Map(stores.map((s) => [s._id.toString(), s]));
+
       const enhanced = payments.map((pay) => {
-        const store = allStores.find((s) => s._id.toString() === pay.storeId);
+        const store = storeMap.get(pay.storeId);
         return {
           _id: pay._id.toString(),
           storeId: pay.storeId,

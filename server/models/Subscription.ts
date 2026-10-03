@@ -28,6 +28,9 @@ const SubscriptionSchema = new Schema<ISubscription>(
   }
 );
 
+SubscriptionSchema.index({ status: 1 });
+SubscriptionSchema.index({ endDate: 1 });
+
 export const SubscriptionModel: Model<ISubscription> =
   (mongoose.models.Subscription as Model<ISubscription>) ||
   mongoose.model<ISubscription>('Subscription', SubscriptionSchema);

@@ -3,13 +3,17 @@ import bcrypt from 'bcryptjs';
 import { PlatformSettingModel, Admin, AuditLogModel } from '../models/index.ts';
 import { isDbConnected, fallbackStore } from '../db.ts';
 import { AdminAuthRequest } from '../middleware/auth.middleware.ts';
+import { dbCache } from '../utils/cache.ts';
 
 export async function getSettings(_req: AdminAuthRequest, res: Response) {
   try {
+    const cached = dbCache.get<any>('settings');
+    if (cached) return res.json(cached);
+
     if (isDbConnected()) {
-      let settings = await PlatformSettingModel.findOne();
+      let settings = await PlatformSettingModel.findOne().lean();
       if (!settings) {
-        settings = await PlatformSettingModel.create({
+        settings = (await PlatformSettingModel.create({
           platformName: 'ShopPOS',
           supportEmail: 'support@shoppos.com',
           currency: 'BDT',
@@ -22,11 +26,15 @@ export async function getSettings(_req: AdminAuthRequest, res: Response) {
           bankBranch: 'Dhanmondi Branch',
           bankAccountName: 'ShopPOS Bangladesh Ltd.',
           bankAccountNumber: '1102938475001',
-        });
+        })).toObject();
       }
-      return res.json({ success: true, settings });
+      const responseData = { success: true, settings };
+      dbCache.set('settings', responseData, 300);
+      return res.json(responseData);
     } else {
-      return res.json({ success: true, settings: fallbackStore.platformSettings });
+      const responseData = { success: true, settings: fallbackStore.platformSettings };
+      dbCache.set('settings', responseData, 300);
+      return res.json(responseData);
     }
   } catch (err: any) {
     return res.status(500).json({ success: false, error: err.message || 'Failed to fetch settings' });
@@ -38,6 +46,7 @@ export async function updateSettings(req: AdminAuthRequest, res: Response) {
   const updates = req.body;
 
   try {
+    dbCache.delete('settings');
     if (isDbConnected()) {
       let settings = await PlatformSettingModel.findOne();
       if (!settings) {

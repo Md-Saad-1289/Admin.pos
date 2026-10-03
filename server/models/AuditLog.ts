@@ -23,6 +23,9 @@ const AuditLogSchema = new Schema<IAuditLog>(
   }
 );
 
+AuditLogSchema.index({ timestamp: -1 });
+AuditLogSchema.index({ adminId: 1 });
+
 export const AuditLogModel: Model<IAuditLog> =
   (mongoose.models.AuditLog as Model<IAuditLog>) ||
   mongoose.model<IAuditLog>('AuditLog', AuditLogSchema);

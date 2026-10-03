@@ -18,11 +18,15 @@ export async function getSupportTickets(req: AdminAuthRequest, res: Response) {
         ];
       }
 
-      const tickets = await SupportTicketModel.find(query).sort({ updatedAt: -1 });
-      const stores = await StoreModel.find();
+      const tickets = await SupportTicketModel.find(query).sort({ updatedAt: -1 }).lean();
+      const storeIds = [...new Set(tickets.map((t) => t.storeId))];
+      const stores = await StoreModel.find({ _id: { $in: storeIds } })
+        .select('name ownerName')
+        .lean();
+      const storeMap = new Map(stores.map((s) => [s._id.toString(), s]));
 
       const enhanced = tickets.map((t) => {
-        const store = stores.find((s) => s._id.toString() === t.storeId);
+        const store = storeMap.get(t.storeId);
         return {
           _id: t._id.toString(),
           storeId: t.storeId,

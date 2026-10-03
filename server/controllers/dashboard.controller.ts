@@ -7,10 +7,18 @@ import {
 } from '../models/index.ts';
 import { isDbConnected, fallbackStore } from '../db.ts';
 import { AdminAuthRequest } from '../middleware/auth.middleware.ts';
+import { dbCache } from '../utils/cache.ts';
 
 export async function getDashboardStats(_req: AdminAuthRequest, res: Response) {
   try {
+    // 1. Check in-memory cache first to avoid DB load
+    const cached = dbCache.get<any>('dashboard');
+    if (cached) {
+      return res.json(cached);
+    }
+
     if (isDbConnected()) {
+      // 2. Optimized parallel queries with lean() and aggregation
       const [
         totalShops,
         activeShops,
@@ -18,10 +26,11 @@ export async function getDashboardStats(_req: AdminAuthRequest, res: Response) {
         activeSubscriptions,
         expiringSubscriptions,
         expiredSubscriptions,
-        pendingPaymentsList,
-        approvedPaymentsList,
+        pendingPaymentsCount,
+        revenueAgg,
         recentStores,
         recentPaymentsDocs,
+        pendingPaymentsList,
         plans,
       ] = await Promise.all([
         StoreModel.countDocuments(),
@@ -30,71 +39,84 @@ export async function getDashboardStats(_req: AdminAuthRequest, res: Response) {
         SubscriptionModel.countDocuments({ status: 'active' }),
         SubscriptionModel.countDocuments({ status: 'expiring' }),
         SubscriptionModel.countDocuments({ status: 'expired' }),
-        PaymentModel.find({ status: 'pending' }).sort({ createdAt: -1 }).limit(10),
-        PaymentModel.find({ status: 'approved' }),
-        StoreModel.find().sort({ createdAt: -1 }).limit(5),
-        PaymentModel.find().sort({ createdAt: -1 }).limit(5),
-        SubscriptionPlan.find(),
+        PaymentModel.countDocuments({ status: 'pending' }),
+        PaymentModel.aggregate([
+          { $match: { status: 'approved' } },
+          { $group: { _id: null, total: { $sum: '$amount' } } },
+        ]),
+        StoreModel.find().sort({ createdAt: -1 }).limit(5).lean(),
+        PaymentModel.find().sort({ createdAt: -1 }).limit(5).lean(),
+        PaymentModel.find({ status: 'pending' }).sort({ createdAt: -1 }).limit(10).lean(),
+        SubscriptionPlan.find().lean(),
       ]);
 
-      const monthlyRevenue = approvedPaymentsList.reduce((acc, p) => acc + (p.amount || 0), 0);
+      const monthlyRevenue = revenueAgg[0]?.total || 0;
 
-      // Enhance recent shops with plan info
-      const recentShopsEnhanced = await Promise.all(
-        recentStores.map(async (s) => {
-          const sub = await SubscriptionModel.findOne({ storeId: s._id.toString() });
-          const plan = sub ? plans.find((p) => p._id.toString() === sub.planId) : null;
-          return {
-            _id: s._id.toString(),
-            name: s.name,
-            branch: s.branch,
-            ownerName: s.ownerName,
-            ownerEmail: s.ownerEmail,
-            storeType: s.storeType,
-            status: s.status,
-            planName: plan?.name || 'Basic',
-            createdAt: s.createdAt,
-          };
-        })
-      );
+      // 3. Batch fetch subscriptions for recent stores (Eliminates N+1 queries)
+      const storeIds = recentStores.map((s) => s._id.toString());
+      const storeSubs = await SubscriptionModel.find({ storeId: { $in: storeIds } }).lean();
+      const subMap = new Map(storeSubs.map((sub) => [sub.storeId, sub]));
+      const planMap = new Map(plans.map((pl) => [pl._id.toString(), pl]));
 
-      // Enhance recent payments
-      const recentPaymentsEnhanced = await Promise.all(
-        recentPaymentsDocs.map(async (p) => {
-          const store = await StoreModel.findById(p.storeId);
-          return {
-            _id: p._id.toString(),
-            storeId: p.storeId,
-            storeName: store?.name || 'Shop',
-            ownerName: store?.ownerName || 'Owner',
-            amount: p.amount,
-            method: p.method,
-            transactionId: p.transactionId,
-            status: p.status,
-            createdAt: p.createdAt,
-          };
-        })
-      );
+      const recentShopsEnhanced = recentStores.map((s) => {
+        const sub = subMap.get(s._id.toString());
+        const plan = sub ? planMap.get(sub.planId) : null;
+        return {
+          _id: s._id.toString(),
+          name: s.name,
+          branch: s.branch,
+          ownerName: s.ownerName,
+          ownerEmail: s.ownerEmail,
+          storeType: s.storeType,
+          status: s.status,
+          planName: plan?.name || 'Basic',
+          createdAt: s.createdAt,
+        };
+      });
 
-      // Enhance pending payments
-      const pendingPaymentsEnhanced = await Promise.all(
-        pendingPaymentsList.map(async (p) => {
-          const store = await StoreModel.findById(p.storeId);
-          return {
-            _id: p._id.toString(),
-            storeId: p.storeId,
-            storeName: store?.name || 'Shop',
-            ownerName: store?.ownerName || 'Owner',
-            amount: p.amount,
-            method: p.method,
-            transactionId: p.transactionId,
-            status: p.status,
-            createdAt: p.createdAt,
-          };
-        })
-      );
+      // 4. Batch fetch stores for payments (Eliminates N+1 queries)
+      const paymentStoreIds = [
+        ...new Set([
+          ...recentPaymentsDocs.map((p) => p.storeId),
+          ...pendingPaymentsList.map((p) => p.storeId),
+        ]),
+      ];
+      const paymentStores = await StoreModel.find({ _id: { $in: paymentStoreIds } })
+        .select('name ownerName')
+        .lean();
+      const pStoreMap = new Map(paymentStores.map((st) => [st._id.toString(), st]));
 
-      return res.json({
+      const recentPaymentsEnhanced = recentPaymentsDocs.map((p) => {
+        const store = pStoreMap.get(p.storeId);
+        return {
+          _id: p._id.toString(),
+          storeId: p.storeId,
+          storeName: store?.name || 'Shop',
+          ownerName: store?.ownerName || 'Owner',
+          amount: p.amount,
+          method: p.method,
+          transactionId: p.transactionId,
+          status: p.status,
+          createdAt: p.createdAt,
+        };
+      });
+
+      const pendingPaymentsEnhanced = pendingPaymentsList.map((p) => {
+        const store = pStoreMap.get(p.storeId);
+        return {
+          _id: p._id.toString(),
+          storeId: p.storeId,
+          storeName: store?.name || 'Shop',
+          ownerName: store?.ownerName || 'Owner',
+          amount: p.amount,
+          method: p.method,
+          transactionId: p.transactionId,
+          status: p.status,
+          createdAt: p.createdAt,
+        };
+      });
+
+      const responseData = {
         success: true,
         stats: {
           totalShops,
@@ -104,13 +126,18 @@ export async function getDashboardStats(_req: AdminAuthRequest, res: Response) {
           activeSubscriptions,
           expiringSubscriptions,
           expiredSubscriptions,
-          pendingPayments: pendingPaymentsList.length,
+          pendingPayments: pendingPaymentsCount,
           newShopsThisMonth: recentStores.length,
         },
         recentShops: recentShopsEnhanced,
         recentPayments: recentPaymentsEnhanced,
         pendingPayments: pendingPaymentsEnhanced,
-      });
+      };
+
+      // 5. Store in cache for 30s to keep DB load low
+      dbCache.set('dashboard', responseData, 30);
+
+      return res.json(responseData);
     } else {
       // Fallback in-memory computation
       const stores = fallbackStore.stores;
@@ -148,7 +175,7 @@ export async function getDashboardStats(_req: AdminAuthRequest, res: Response) {
         };
       });
 
-      const pendingPayments = pendingPaymentsList.map((p) => {
+      const pendingPaymentsEnhanced = pendingPaymentsList.slice(0, 10).map((p) => {
         const store = stores.find((s) => s._id === p.storeId);
         return {
           ...p,
@@ -157,7 +184,7 @@ export async function getDashboardStats(_req: AdminAuthRequest, res: Response) {
         };
       });
 
-      return res.json({
+      const responseData = {
         success: true,
         stats: {
           totalShops,
@@ -172,8 +199,11 @@ export async function getDashboardStats(_req: AdminAuthRequest, res: Response) {
         },
         recentShops,
         recentPayments,
-        pendingPayments,
-      });
+        pendingPayments: pendingPaymentsEnhanced,
+      };
+
+      dbCache.set('dashboard', responseData, 30);
+      return res.json(responseData);
     }
   } catch (err: any) {
     return res.status(500).json({ success: false, error: err.message || 'Failed to fetch dashboard stats' });

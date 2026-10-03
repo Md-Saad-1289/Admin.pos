@@ -32,5 +32,10 @@ const StoreSchema = new Schema<IStore>(
   }
 );
 
+StoreSchema.index({ status: 1 });
+StoreSchema.index({ createdAt: -1 });
+StoreSchema.index({ name: 1, branch: 1 });
+StoreSchema.index({ ownerEmail: 1 });
+
 export const StoreModel: Model<IStore> =
   (mongoose.models.Store as Model<IStore>) || mongoose.model<IStore>('Store', StoreSchema);

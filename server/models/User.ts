@@ -28,5 +28,8 @@ const UserSchema = new Schema<IUser>(
   }
 );
 
+UserSchema.index({ storeId: 1, role: 1 });
+UserSchema.index({ email: 1 });
+
 export const UserModel: Model<IUser> =
   (mongoose.models.User as Model<IUser>) || mongoose.model<IUser>('User', UserSchema);

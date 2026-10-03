@@ -42,6 +42,8 @@ const SupportTicketSchema = new Schema<ISupportTicket>(
   }
 );
 
+SupportTicketSchema.index({ status: 1, priority: 1, updatedAt: -1 });
+
 export const SupportTicketModel: Model<ISupportTicket> =
   (mongoose.models.SupportTicket as Model<ISupportTicket>) ||
   mongoose.model<ISupportTicket>('SupportTicket', SupportTicketSchema);

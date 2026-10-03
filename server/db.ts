@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import { EventEmitter } from 'events';
+import { dbCache } from './utils/cache.ts';
 import {
   Admin,
   StoreModel,
@@ -15,6 +16,52 @@ import {
 } from './models/index.ts';
 
 export const changeStreamEmitter = new EventEmitter();
+
+// Invalidate caches when database mutations occur
+changeStreamEmitter.on('store_created', () => {
+  dbCache.invalidatePrefix('dashboard');
+  dbCache.invalidatePrefix('shops');
+});
+changeStreamEmitter.on('store_change', () => {
+  dbCache.invalidatePrefix('dashboard');
+  dbCache.invalidatePrefix('shops');
+});
+changeStreamEmitter.on('payment_change', () => {
+  dbCache.invalidatePrefix('dashboard');
+  dbCache.invalidatePrefix('payments');
+});
+changeStreamEmitter.on('ticket_change', () => {
+  dbCache.invalidatePrefix('dashboard');
+  dbCache.invalidatePrefix('support');
+});
+changeStreamEmitter.on('ACCOUNT_SUSPENDED', () => {
+  dbCache.invalidatePrefix('dashboard');
+  dbCache.invalidatePrefix('shops');
+});
+changeStreamEmitter.on('ACCOUNT_ACTIVATED', () => {
+  dbCache.invalidatePrefix('dashboard');
+  dbCache.invalidatePrefix('shops');
+});
+changeStreamEmitter.on('PAYMENT_RECORDED', () => {
+  dbCache.invalidatePrefix('dashboard');
+  dbCache.invalidatePrefix('payments');
+});
+changeStreamEmitter.on('PAYMENT_APPROVED', () => {
+  dbCache.invalidatePrefix('dashboard');
+  dbCache.invalidatePrefix('payments');
+});
+changeStreamEmitter.on('PAYMENT_REJECTED', () => {
+  dbCache.invalidatePrefix('dashboard');
+  dbCache.invalidatePrefix('payments');
+});
+changeStreamEmitter.on('NEW_SUPPORT_TICKET', () => {
+  dbCache.invalidatePrefix('dashboard');
+  dbCache.invalidatePrefix('support');
+});
+changeStreamEmitter.on('TICKET_REPLIED', () => {
+  dbCache.invalidatePrefix('dashboard');
+  dbCache.invalidatePrefix('support');
+});
 
 let isConnected = false;
 let isFallbackMode = false;
@@ -52,8 +99,11 @@ export async function connectMongoDB(): Promise<boolean> {
     console.log(`[MongoDB] Connecting to ${mongoUri}...`);
     
     await mongoose.connect(mongoUri, {
-      serverSelectionTimeoutMS: 3000,
-      connectTimeoutMS: 3000,
+      maxPoolSize: 25,
+      minPoolSize: 5,
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
     });
 
     isConnected = true;

@@ -11,6 +11,7 @@ import {
 } from '../models/index.ts';
 import { isDbConnected, fallbackStore, changeStreamEmitter } from '../db.ts';
 import { AdminAuthRequest } from '../middleware/auth.middleware.ts';
+import { dbCache } from '../utils/cache.ts';
 
 export async function getShops(req: AdminAuthRequest, res: Response) {
   const { search = '', status = '', storeType = '', plan = '', page = '1', limit = '10' } = req.query;
@@ -33,35 +34,41 @@ export async function getShops(req: AdminAuthRequest, res: Response) {
         ];
       }
 
-      const allPlans = await SubscriptionPlan.find();
-      const total = await StoreModel.countDocuments(query);
-      const stores = await StoreModel.find(query)
-        .sort({ createdAt: -1 })
-        .skip((p - 1) * lim)
-        .limit(lim);
+      const [allPlans, total, stores] = await Promise.all([
+        SubscriptionPlan.find().lean(),
+        StoreModel.countDocuments(query),
+        StoreModel.find(query)
+          .sort({ createdAt: -1 })
+          .skip((p - 1) * lim)
+          .limit(lim)
+          .lean(),
+      ]);
 
-      const enhanced = await Promise.all(
-        stores.map(async (s) => {
-          const sub = await SubscriptionModel.findOne({ storeId: s._id.toString() });
-          const planDoc = sub ? allPlans.find((pl) => pl._id.toString() === sub.planId) : null;
-          return {
-            _id: s._id.toString(),
-            name: s.name,
-            branch: s.branch,
-            ownerId: s.ownerId,
-            ownerName: s.ownerName,
-            ownerEmail: s.ownerEmail,
-            phone: s.phone,
-            address: s.address,
-            storeType: s.storeType,
-            status: s.status,
-            createdAt: s.createdAt,
-            updatedAt: s.updatedAt,
-            planName: planDoc?.name || 'Basic',
-            subscriptionStatus: sub?.status || 'active',
-          };
-        })
-      );
+      const storeIds = stores.map((s) => s._id.toString());
+      const subs = await SubscriptionModel.find({ storeId: { $in: storeIds } }).lean();
+      const subMap = new Map(subs.map((su) => [su.storeId, su]));
+      const planMap = new Map(allPlans.map((pl) => [pl._id.toString(), pl]));
+
+      const enhanced = stores.map((s) => {
+        const sub = subMap.get(s._id.toString());
+        const planDoc = sub ? planMap.get(sub.planId) : null;
+        return {
+          _id: s._id.toString(),
+          name: s.name,
+          branch: s.branch,
+          ownerId: s.ownerId,
+          ownerName: s.ownerName,
+          ownerEmail: s.ownerEmail,
+          phone: s.phone,
+          address: s.address,
+          storeType: s.storeType,
+          status: s.status,
+          createdAt: s.createdAt,
+          updatedAt: s.updatedAt,
+          planName: planDoc?.name || 'Basic',
+          subscriptionStatus: sub?.status || 'active',
+        };
+      });
 
       const filtered = plan ? enhanced.filter((s) => s.planName.toLowerCase() === (plan as string).toLowerCase()) : enhanced;
 
